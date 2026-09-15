@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import { fontFamily } from "tailwindcss/defaultTheme";
 
 export default {
     darkMode: ["class"],
@@ -8,7 +9,17 @@ export default {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+  	container: {
+  		center: true,
+  		screens: {
+  			'2xl': '1400px'
+  		}
+  	},
   	extend: {
+  		fontFamily: {
+  			sans: ['var(--font-geist-sans)', ...fontFamily.sans],
+  			mono: ['var(--font-geist-mono)', ...fontFamily.mono]
+  		},
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
@@ -65,6 +76,15 @@ export default {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
+  		},
+  		// Shadows tinted with --shadow (warm in light mode) instead of pure black
+  		boxShadow: {
+  			sm: '0 1px 2px 0 hsl(var(--shadow) / 0.05)',
+  			DEFAULT: '0 1px 3px 0 hsl(var(--shadow) / 0.08), 0 1px 2px -1px hsl(var(--shadow) / 0.06)',
+  			md: '0 4px 12px -2px hsl(var(--shadow) / 0.08), 0 2px 4px -2px hsl(var(--shadow) / 0.05)',
+  			lg: '0 12px 28px -8px hsl(var(--shadow) / 0.12), 0 4px 8px -4px hsl(var(--shadow) / 0.06)',
+  			xl: '0 20px 40px -12px hsl(var(--shadow) / 0.16)',
+  			'2xl': '0 28px 56px -16px hsl(var(--shadow) / 0.22)'
   		},
   		keyframes: {
   			'accordion-down': {

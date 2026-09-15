@@ -2,102 +2,111 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 @layer base {
   :root {
-    --background: 0 0% 98%; /* Very light gray, almost white */
-    --foreground: 220 10% 15%; /* Dark, slightly desaturated blue/gray for text */
-    
-    --card: 0 0% 100%; /* White */
-    --card-foreground: 220 10% 15%; /* Dark, slightly desaturated blue/gray for text */
-    
-    --popover: 0 0% 100%; /* White */
-    --popover-foreground: 220 10% 15%; /* Dark, slightly desaturated blue/gray for text */
-    
-    --primary: 16 100% 63%; /* Coral #FF7043 */
-    --primary-foreground: 0 0% 100%; /* White for text on coral */
-    
-    --secondary: 210 20% 92%; /* Light gray-blue */
-    --secondary-foreground: 220 10% 25%; /* Slightly darker text for secondary elements */
-    
-    --muted: 210 20% 95%; /* Very light gray-blue, lighter than secondary */
-    --muted-foreground: 210 10% 45%; /* Grayer text for muted contexts */
-    
-    --accent: 195 100% 94%; /* Light Blue #E1F5FE */
-    --accent-foreground: 195 80% 30%; /* A noticeable blue for text on light blue accent */
-    
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    
-    --border: 210 20% 88%; /* Slightly darker border for better definition */
-    --input: 210 20% 92%; /* Same as secondary, for input fields background */
-    --ring: 16 100% 63%; /* Coral for focus rings */
-    
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
+    color-scheme: light;
 
-    /* Sidebar variables - kept for shadcn component compatibility, but not actively themed for this app */
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Warm-neutral base (stone family), one chromatic accent: coral */
+    --background: 24 8% 98%;
+    --foreground: 24 10% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 24 10% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 24 10% 10%;
+
+    /* Brand coral, darkened to pass WCAG AA with white text (4.68:1). Brand source: #FF7043 */
+    --primary: 13 78% 46%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 24 8% 94%;
+    --secondary-foreground: 24 10% 18%;
+
+    --muted: 24 8% 95%;
+    --muted-foreground: 24 6% 40%;
+
+    /* Coral-tinted surface for hover and active states */
+    --accent: 16 70% 95%;
+    --accent-foreground: 13 70% 32%;
+
+    --destructive: 0 72% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 24 7% 89%;
+    --input: 24 7% 86%;
+    --ring: 13 78% 46%;
+
+    /* Tint used by the boxShadow scale in tailwind.config.ts */
+    --shadow: 24 20% 20%;
+
+    --chart-1: 13 78% 52%;
+    --chart-2: 173 45% 36%;
+    --chart-3: 215 22% 38%;
+    --chart-4: 38 85% 55%;
+    --chart-5: 340 55% 52%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 24 8% 98%;
+    --sidebar-foreground: 24 10% 18%;
+    --sidebar-primary: 13 78% 46%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 16 70% 95%;
+    --sidebar-accent-foreground: 13 70% 32%;
+    --sidebar-border: 24 7% 89%;
+    --sidebar-ring: 13 78% 46%;
   }
 
+  /* Applied automatically from prefers-color-scheme (see src/app/layout.tsx) */
   .dark {
-    /* Keeping dark mode variables, can be customized further if dark mode is implemented */
-    --background: 220 10% 10%;
-    --foreground: 0 0% 95%;
-    
-    --card: 220 10% 12%;
-    --card-foreground: 0 0% 95%;
-    
-    --popover: 220 10% 10%;
-    --popover-foreground: 0 0% 95%;
-    
-    --primary: 16 100% 63%; /* Coral #FF7043 */
-    --primary-foreground: 0 0% 100%; /* White */
-    
-    --secondary: 210 20% 20%;
-    --secondary-foreground: 0 0% 90%;
-    
-    --muted: 210 20% 15%;
-    --muted-foreground: 0 0% 60%;
-    
-    --accent: 195 100% 25%; 
-    --accent-foreground: 195 80% 90%;
-    
-    --destructive: 0 70% 50%;
-    --destructive-foreground: 0 0% 98%;
-    
-    --border: 210 20% 25%;
-    --input: 210 20% 20%;
-    --ring: 16 100% 63%; /* Coral */
-    
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    color-scheme: dark;
 
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --background: 24 8% 7%;
+    --foreground: 24 8% 94%;
+
+    --card: 24 7% 10%;
+    --card-foreground: 24 8% 94%;
+
+    --popover: 24 7% 10%;
+    --popover-foreground: 24 8% 94%;
+
+    /* Original brand coral; dark text on it keeps AA contrast (6.5:1) */
+    --primary: 16 100% 63%;
+    --primary-foreground: 24 10% 8%;
+
+    --secondary: 24 6% 16%;
+    --secondary-foreground: 24 8% 90%;
+
+    --muted: 24 6% 14%;
+    --muted-foreground: 24 5% 62%;
+
+    --accent: 16 40% 16%;
+    --accent-foreground: 16 100% 75%;
+
+    --destructive: 0 80% 62%;
+    --destructive-foreground: 24 10% 8%;
+
+    --border: 24 6% 18%;
+    --input: 24 6% 22%;
+    --ring: 16 100% 63%;
+
+    --shadow: 24 30% 2%;
+
+    --chart-1: 16 100% 63%;
+    --chart-2: 173 50% 48%;
+    --chart-3: 215 25% 62%;
+    --chart-4: 40 90% 60%;
+    --chart-5: 340 70% 65%;
+
+    --sidebar-background: 24 8% 7%;
+    --sidebar-foreground: 24 8% 90%;
+    --sidebar-primary: 16 100% 63%;
+    --sidebar-primary-foreground: 24 10% 8%;
+    --sidebar-accent: 16 40% 16%;
+    --sidebar-accent-foreground: 16 100% 75%;
+    --sidebar-border: 24 6% 18%;
+    --sidebar-ring: 16 100% 63%;
   }
 }
 
@@ -106,6 +115,30 @@ body {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background font-sans text-foreground antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply tracking-tight;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  ::selection {
+    background-color: hsl(var(--primary) / 0.2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

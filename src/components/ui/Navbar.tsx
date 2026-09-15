@@ -22,7 +22,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {
   Menu,
-  X,
   Shirt,
   BarChart3,
   Settings,
@@ -32,9 +31,8 @@ import {
   Archive,
   ShoppingBag,
   ChevronDown,
-  Wand2, 
+  Wand2,
   SlidersHorizontal,
-  Home,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -52,7 +50,7 @@ const mainDesktopLinks: NavLinkItem[] = [
 ];
 
 const suggestionsDropdownItems: NavLinkItem[] = [
-  { href: '/sugerenciaia', label: 'Sugerencias AI', icon: Home },
+  { href: '/sugerenciaia', label: 'Sugerencias AI', icon: Wand2 },
   { href: '/looks', label: 'Mis Looks', icon: Sparkles },
 ];
 
@@ -64,7 +62,7 @@ const moreSettingsDropdownItems: NavLinkItem[] = [
 
 const allMobileNavLinks: NavLinkItem[] = [
   { href: '/', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/sugerenciaia', label: 'Sugerencias AI', icon: Home },
+  { href: '/sugerenciaia', label: 'Sugerencias AI', icon: Wand2 },
   { href: '/closet', label: 'Armario', icon: Shirt },
   { href: '/looks', label: 'Mis Looks', icon: Sparkles },
   { href: '/calendario', label: 'Calendario', icon: CalendarDays },
@@ -73,6 +71,12 @@ const allMobileNavLinks: NavLinkItem[] = [
   { href: '/deseos', label: 'Lista Deseos', icon: ShoppingBag },
   { href: '/configuracion', label: 'Configuración', icon: Settings },
 ];
+
+const desktopItemClass = (active: boolean) =>
+  cn(
+    'h-9 px-3 text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground',
+    active && 'bg-accent text-accent-foreground'
+  );
 
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
@@ -87,129 +91,107 @@ export function Navbar() {
     return itemHrefs.some(href => isLinkActive(href));
   };
 
-  return (
-    <nav className="bg-card border-b border-border/70 shadow-sm sticky top-0 z-50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex-shrink-0">
-            <Link href="/" aria-label="EstilosIA Home" className="flex items-center">
-              <Logo className="h-8 w-auto" />
-            </Link>
-          </div>
-
-          <div className="hidden md:flex md:ml-6 md:space-x-1 lg:space-x-2 items-center">
-            {mainDesktopLinks.map((link) => (
-              <Button
-                key={link.label}
-                variant="ghost"
-                asChild
-                className={cn(
-                  "px-3 py-2 rounded-md text-sm font-medium text-foreground hover:bg-accent hover:text-accent-foreground",
-                  isLinkActive(link.href) && "bg-accent text-accent-foreground"
-                )}
+  const renderDropdown = (label: string, TriggerIcon: React.ElementType, items: NavLinkItem[]) => (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="ghost"
+          className={desktopItemClass(isDropdownActive(items.map(item => item.href)))}
+        >
+          <TriggerIcon className="hidden xl:block" />
+          {label}
+          <ChevronDown className="opacity-60" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-52">
+        {items.map((item) => {
+          const active = isLinkActive(item.href);
+          return (
+            <DropdownMenuItem key={item.label} asChild>
+              <Link
+                href={item.href}
+                aria-current={active ? 'page' : undefined}
+                className={cn('gap-2', active && 'bg-accent text-accent-foreground')}
               >
-                <Link href={link.href}>
-                  <link.icon className="mr-2 h-4 w-4 opacity-80" />
-                  {link.label}
-                </Link>
-              </Button>
-            ))}
+                <item.icon className="h-4 w-4" />
+                {item.label}
+              </Link>
+            </DropdownMenuItem>
+          );
+        })}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className={cn(
-                    "px-3 py-2 rounded-md text-sm font-medium text-foreground hover:bg-accent hover:text-accent-foreground flex items-center",
-                    isDropdownActive(suggestionsDropdownItems.map(item => item.href)) && "bg-accent text-accent-foreground"
-                  )}
-                >
-                  <Wand2 className="mr-2 h-4 w-4 opacity-80" />
-                  Sugerencias
-                  <ChevronDown className="ml-1 h-4 w-4 opacity-70" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                {suggestionsDropdownItems.map((item) => (
-                  <DropdownMenuItem key={item.label} asChild>
-                    <Link href={item.href} passHref className={cn(isLinkActive(item.href) && "bg-accent/50")}>
-                      <item.icon className="mr-2 h-4 w-4 opacity-80" />
-                      {item.label}
-                    </Link>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+  return (
+    <nav className="sticky top-0 z-50 border-b border-border/70 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+      {/* px-4 matches the `container mx-auto px-4` used by every page's <main> */}
+      <div className="container mx-auto px-4">
+        <div className="flex h-16 items-center justify-between gap-6">
+          <Link
+            href="/"
+            aria-label="EstilosIA Home"
+            className="flex flex-shrink-0 items-center rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <Logo className="h-8 w-auto" />
+          </Link>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className={cn(
-                    "px-3 py-2 rounded-md text-sm font-medium text-foreground hover:bg-accent hover:text-accent-foreground flex items-center",
-                     isDropdownActive(moreSettingsDropdownItems.map(item => item.href)) && "bg-accent text-accent-foreground"
-                  )}
-                >
-                  <SlidersHorizontal className="mr-2 h-4 w-4 opacity-80" />
-                  Más Ajustes
-                  <ChevronDown className="ml-1 h-4 w-4 opacity-70" />
+          <div className="hidden items-center gap-1 lg:flex">
+            {mainDesktopLinks.map((link) => {
+              const active = isLinkActive(link.href);
+              return (
+                <Button key={link.label} variant="ghost" asChild className={desktopItemClass(active)}>
+                  <Link href={link.href} aria-current={active ? 'page' : undefined}>
+                    <link.icon className="hidden xl:block" />
+                    {link.label}
+                  </Link>
                 </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                {moreSettingsDropdownItems.map((item) => (
-                  <DropdownMenuItem key={item.label} asChild>
-                    <Link href={item.href} passHref className={cn(isLinkActive(item.href) && "bg-accent/50")}>
-                      <item.icon className="mr-2 h-4 w-4 opacity-80" />
-                      {item.label}
-                    </Link>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+              );
+            })}
+
+            {renderDropdown('Sugerencias', Wand2, suggestionsDropdownItems)}
+            {renderDropdown('Más Ajustes', SlidersHorizontal, moreSettingsDropdownItems)}
           </div>
 
-          <div className="flex items-center gap-2">
-            <div className="md:hidden">
-              <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-                <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" aria-label="Abrir menú principal">
-                    <Menu className="h-6 w-6" />
-                  </Button>
-                </SheetTrigger>
-                <SheetContent side="left" className="w-72 sm:w-80 bg-card p-0 flex flex-col">
-                  <SheetHeader className="p-4 border-b border-border flex-row justify-between items-center">
-                     <SheetTitle asChild>
-                       <Link href="/" onClick={() => setIsMobileMenuOpen(false)} aria-label="EstilosIA Home">
-                          <Logo className="h-7 w-auto" />
-                       </Link>
-                     </SheetTitle>
-                    <SheetClose asChild>
-                      <Button variant="ghost" size="icon" aria-label="Cerrar menú">
-                        <X className="h-6 w-6" />
-                      </Button>
-                    </SheetClose>
-                  </SheetHeader>
-                  <div className="flex-grow py-4 px-2 space-y-1 overflow-y-auto">
-                    {allMobileNavLinks.map((link) => ( 
+          <div className="lg:hidden">
+            <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" aria-label="Abrir menú principal">
+                  <Menu className="!size-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" aria-describedby={undefined} className="flex w-72 flex-col bg-background p-0 sm:w-80">
+                {/* SheetContent renders its own close button (top-right) */}
+                <SheetHeader className="flex-row items-center space-y-0 border-b border-border px-4 py-3">
+                  <SheetTitle asChild>
+                    <Link href="/" onClick={() => setIsMobileMenuOpen(false)} aria-label="EstilosIA Home">
+                      <Logo className="h-7 w-auto" />
+                    </Link>
+                  </SheetTitle>
+                </SheetHeader>
+                <div className="flex-grow space-y-1 overflow-y-auto px-3 py-4">
+                  {allMobileNavLinks.map((link) => {
+                    const active = isLinkActive(link.href);
+                    return (
                       <SheetClose asChild key={link.label}>
                         <Link
                           href={link.href}
-                          passHref
+                          aria-current={active ? 'page' : undefined}
                           className={cn(
-                            'flex items-center px-3 py-3 rounded-md text-base font-medium text-foreground hover:bg-accent hover:text-accent-foreground transition-colors group',
-                            isLinkActive(link.href) && "bg-accent text-accent-foreground"
+                            'flex items-center gap-3 rounded-md px-3 py-2.5 text-[15px] font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground',
+                            active && 'bg-accent text-accent-foreground'
                           )}
                           onClick={() => setIsMobileMenuOpen(false)}
                         >
-                          <link.icon className={cn("mr-3 h-5 w-5 text-muted-foreground group-hover:text-accent-foreground", isLinkActive(link.href) && "text-accent-foreground")} />
+                          <link.icon className="h-5 w-5" />
                           {link.label}
                         </Link>
                       </SheetClose>
-                    ))}
-                  </div>
-                </SheetContent>
-              </Sheet>
-            </div>
+                    );
+                  })}
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>
