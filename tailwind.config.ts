@@ -20,6 +20,17 @@ export default {
   			sans: ['var(--font-geist-sans)', ...fontFamily.sans],
   			mono: ['var(--font-geist-mono)', ...fontFamily.mono]
   		},
+  		// Component/motion tokens from src/app/globals.css (see docs/design-system.md)
+  		spacing: {
+  			nav: 'var(--nav-height)'
+  		},
+  		transitionDuration: {
+  			fast: 'var(--duration-fast)',
+  			normal: 'var(--duration-normal)'
+  		},
+  		transitionTimingFunction: {
+  			'out-expo': 'var(--ease-out-expo)'
+  		},
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
@@ -33,7 +44,8 @@ export default {
   			},
   			primary: {
   				DEFAULT: 'hsl(var(--primary))',
-  				foreground: 'hsl(var(--primary-foreground))'
+  				foreground: 'hsl(var(--primary-foreground))',
+  				hover: 'hsl(var(--primary-hover))'
   			},
   			secondary: {
   				DEFAULT: 'hsl(var(--secondary))',
@@ -49,7 +61,8 @@ export default {
   			},
   			destructive: {
   				DEFAULT: 'hsl(var(--destructive))',
-  				foreground: 'hsl(var(--destructive-foreground))'
+  				foreground: 'hsl(var(--destructive-foreground))',
+  				hover: 'hsl(var(--destructive-hover))'
   			},
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',

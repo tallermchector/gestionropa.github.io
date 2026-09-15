@@ -30,7 +30,7 @@ export function ColorDistributionChart({ data }: ColorDistributionChartProps) {
           labelLine={false}
           label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
           outerRadius={80}
-          fill="#8884d8"
+          fill="hsl(var(--chart-1))"
           dataKey="count"
           nameKey="color"
         >

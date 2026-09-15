@@ -127,7 +127,7 @@ export function Navbar() {
     <nav className="sticky top-0 z-50 border-b border-border/70 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       {/* px-4 matches the `container mx-auto px-4` used by every page's <main> */}
       <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between gap-6">
+        <div className="flex h-nav items-center justify-between gap-6">
           <Link
             href="/"
             aria-label="EstilosIA Home"
